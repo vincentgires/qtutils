@@ -23,7 +23,7 @@ QWidget
     background-color: #343434;
     padding: 2px;
     margin: 2px;
-    
+    border: none;
 }
 
 QWidget:item:hover
@@ -136,6 +136,12 @@ QTabWidget::pane {
     padding: 3px;
 }
 
+QTabBar
+{
+    qproperty-drawBase: 0;
+}
+
+
 QTabBar::tab {
     border: 1px solid #4A4949;
     border-bottom: 1px transparent black;
@@ -198,7 +204,6 @@ QTextEdit
     color: silver;
     border: 1px solid #3A3939;
 }
-
 
 
 QScrollBar {
@@ -264,7 +269,6 @@ QScrollBar::add-page, QScrollBar::sub-page
 
 
 
-
 QSlider::groove {
     border: 1px solid #272727;
     border-radius: 1px;
@@ -325,6 +329,7 @@ QGroupBox::title {
     left: 9px;
     margin-top: -9px;
 }
+
 
 
 
