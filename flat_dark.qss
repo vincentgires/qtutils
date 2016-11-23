@@ -21,6 +21,9 @@ QWidget
 {
     color: silver;
     background-color: #343434;
+    padding: 2px;
+    margin: 2px;
+    
 }
 
 QWidget:item:hover
@@ -36,7 +39,7 @@ QWidget:item:selected
 
 
 QToolBar {
-    border: 1px solid #5D5D5D;
+    border: 0;
 }
 
 
@@ -69,28 +72,29 @@ QLabel
     border: 0px solid black;
 }
 
-QPushButton, QToolButton
-{
-    color: silver;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 2px;
-    outline: none;
-}
 
 QPushButton
 {
-    padding: 4px;
+    margin: 2px;
+    padding: 2px;
     border-color: #3A3939;
     background-color: #272525;
 }
 
 QToolButton
 {
-    padding: 0;
+    margin: 3px;
+    padding: 3px;
     border-color: #343434;
     background-color: None;
 }
+
+QToolButton:checked, QToolButton:pressed
+{
+    background-color: #727272;
+    border: 1px solid #727272;
+}
+
 
 QPushButton:disabled, QToolButton:disabled, QAbstractSpinBox:disabled
 {
