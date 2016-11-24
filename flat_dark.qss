@@ -111,14 +111,41 @@ QPushButton:pressed, QToolButton:pressed
 }
 
 
-QComboBox {
+QComboBox
+{
     selection-background-color: #343434;
+    border-style: solid;
+    border: 1px solid #76797C;
+    border-radius: 1px;
+    padding: 2px;
+}
+
+QComboBox:hover
+{
+    border: 1px solid silver;
+    color: white;
+}
+
+QComboBox:on
+{
+    color: white;
+}
+
+/* inside QComboBox*/
+QComboBox QAbstractItemView
+{
+    color: darkgrey;
+    background-color: #272525;
+    border-radius: 1px;
+    border: 1px solid #76797C;
 }
 
 /* QComboBox pop-up */
 QAbstractItemView { 
     selection-background-color: #585858;
 }
+
+
 
 
 QAbstractSpinBox {
@@ -130,10 +157,13 @@ QAbstractSpinBox {
     border-radius: 2px;
 }
 
+
+
+
 QTabWidget::pane {
     border: 1px solid #444;
     border-radius: 3px;
-    padding: 3px;
+    padding: 30px;
 }
 
 QTabBar
@@ -143,24 +173,17 @@ QTabBar
 
 
 QTabBar::tab {
-    border: 1px solid #4A4949;
-    border-bottom: 1px transparent black;
-    background-color: #302F2F;
+    border: 1px solid #5D5D5D;
+    border-bottom: 0;
+    border-left: 0;
+    background-color: #5D5D5D;
     padding: 5px;
 }
+
 QTabBar::tab:!selected
 {
-    color: #b1b1b1;
-    background-color: #272525;
-    border: 1px transparent #4A4949;
+    background-color: #302F2F;
 }
-QTabBar::tab:!selected:hover {
-    background-color: #3C3C3C;
-}
-
-
-
-
 
 
 
