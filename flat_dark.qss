@@ -21,8 +21,8 @@ QWidget
 {
     color: silver;
     background-color: #343434;
-    padding: 2px;
-    margin: 2px;
+    padding: 1px;
+    margin: 1px;
     border: none;
 }
 
@@ -75,16 +75,16 @@ QLabel
 
 QPushButton
 {
-    margin: 2px;
-    padding: 2px;
+    margin: 1px;
+    padding: 5px;
     border-color: #3A3939;
     background-color: #272525;
 }
 
 QToolButton
 {
-    margin: 3px;
-    padding: 3px;
+    margin: 1px;
+    padding: 2px;
     border-color: #343434;
     background-color: None;
 }
