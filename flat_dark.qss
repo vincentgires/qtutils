@@ -54,13 +54,14 @@ QLineEdit
 }
 
 
-
-
 QFrame
 {
     border-radius: 2px;
     border: 1px solid #444;
+    padding: 0;
+    margin: 0;
 }
+
 QFrame[frameShape="0"]
 {
     border: 1px transparent #444;
@@ -162,8 +163,9 @@ QAbstractSpinBox {
 
 QTabWidget::pane {
     border: 1px solid #444;
-    border-radius: 3px;
-    padding: 2px;
+    border-radius: 2px;
+    padding: 1px;
+    margin: 1px;
 }
 
 QTabBar
@@ -224,9 +226,10 @@ QAbstractItemView
 
 QTextEdit
 {
-    background-color: #272525;
+    /*background-color: #272525;*/
+    background-color: #3A3939;
     color: silver;
-    border: 1px solid #3A3939;
+    border: 1px solid #5D5D5D;
 }
 
 
