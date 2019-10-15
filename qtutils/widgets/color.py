@@ -267,6 +267,7 @@ class HueSatWheel(QtWidgets.QWidget):
         x, y = self._get_coords_from_hue_sat(h, s)
         self._color_point.setX(x)
         self._color_point.setY(y)
+        self.repaint()
 
     def hsv(self):
         return self.hue, self.saturation, self.value
