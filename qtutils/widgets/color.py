@@ -8,7 +8,7 @@ class ColorBalance(QtWidgets.QWidget):
     currentColorChanged = QtCore.Signal(tuple)
 
     def __init__(self, parent=None):
-        super(ColorBalance, self).__init__(parent)
+        super().__init__(parent)
         self.setWindowTitle('ColorBalance')
         self.resize(150, 150)
         self.hue = 1.0
@@ -74,9 +74,9 @@ class ColorBalance(QtWidgets.QWidget):
     def update_rgb(self):
         self.currentColorChanged.emit(self.rgb())
         r, g, b = self.rgb()
-        self.rgb_label['r'].setText('{:.2f}'.format(r))
-        self.rgb_label['g'].setText('{:.2f}'.format(g))
-        self.rgb_label['b'].setText('{:.2f}'.format(b))
+        self.rgb_label['r'].setText(f'{r:.2f}')
+        self.rgb_label['g'].setText(f'{g:.2f}')
+        self.rgb_label['b'].setText(f'{b:.2f}')
 
 
 class ValueSlider(QtWidgets.QWidget):
@@ -87,7 +87,7 @@ class ValueSlider(QtWidgets.QWidget):
     sliderMoved = QtCore.Signal(float)
 
     def __init__(self, value=1.0, parent=None):
-        super(ValueSlider, self).__init__(parent)
+        super().__init__(parent)
         self.value = value
         self._drag_origin = None
         self._start_origin = None
@@ -158,7 +158,7 @@ class HueSatWheel(QtWidgets.QWidget):
     currentColorChanged = QtCore.Signal(tuple)
 
     def __init__(self, parent=None):
-        super(HueSatWheel, self).__init__(parent)
+        super().__init__(parent)
         self.resize(100, 100)
         self.setMinimumSize(self.MININUM_SIZE, self.MININUM_SIZE)
         self.setSizePolicy(
