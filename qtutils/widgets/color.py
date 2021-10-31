@@ -96,7 +96,7 @@ class ValueSlider(QtWidgets.QWidget):
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
 
     def paintEvent(self, event):
-        painter = QtGui.QPainter(self)
+        painter = QtGui.QPainter()
         painter.begin(self)
 
         # Gradient
@@ -170,7 +170,7 @@ class HueSatWheel(QtWidgets.QWidget):
         self._colorwheel_image = None
 
     def paintEvent(self, event):
-        painter = QtGui.QPainter(self)
+        painter = QtGui.QPainter()
         painter.begin(self)
         painter.setRenderHint(QtGui.QPainter.Antialiasing, True)
 
