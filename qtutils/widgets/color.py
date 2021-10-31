@@ -5,7 +5,7 @@ import sys
 
 
 class ColorBalance(QtWidgets.QWidget):
-    currentColorChanged = QtCore.Signal(tuple)
+    currentColorChanged = QtCore.pyqtSignal(tuple)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -18,15 +18,12 @@ class ColorBalance(QtWidgets.QWidget):
         self.huesat_wheel.currentColorChanged.connect(self.on_hue_sat_changed)
         self.value_slider = ValueSlider()
         self.value_slider.sliderMoved.connect(self.on_value_changed)
-        self.rgb_label = {}
-        self.rgb_label = {
-            'r': QtWidgets.QLabel(),
-            'g': QtWidgets.QLabel(),
-            'b': QtWidgets.QLabel()}
-        for color, widget in self.rgb_label.items():
-            widget.setFrameShape(QtWidgets.QFrame.StyledPanel)
-            widget.setFrameShadow(QtWidgets.QFrame.Plain)
-            widget.setLineWidth(1)
+        self.rgb_edits = [QtWidgets.QLineEdit() for _ in range(3)]
+        validator = QtGui.QDoubleValidator()
+        validator.setRange(0.0, 1.0, 2)
+        for edit in self.rgb_edits:
+            edit.textEdited.connect(self.set_rgb_from_edit)
+            edit.setValidator(validator)
         self.update_rgb()
         self.set_layout()
 
@@ -35,9 +32,8 @@ class ColorBalance(QtWidgets.QWidget):
         colorwheel_layout.addWidget(self.huesat_wheel)
         colorwheel_layout.addWidget(self.value_slider)
         rgb_layout = QtWidgets.QHBoxLayout()
-        rgb_layout.addWidget(self.rgb_label['r'])
-        rgb_layout.addWidget(self.rgb_label['g'])
-        rgb_layout.addWidget(self.rgb_label['b'])
+        for widget in self.rgb_edits:
+            rgb_layout.addWidget(widget)
         vbox = QtWidgets.QVBoxLayout()
         vbox.addLayout(colorwheel_layout)
         vbox.addLayout(rgb_layout)
@@ -60,8 +56,10 @@ class ColorBalance(QtWidgets.QWidget):
     def rgb(self):
         return colorsys.hsv_to_rgb(self.hue, self.saturation, self.value)
 
-    def set_rgb(self, r, g, b):
-        h, s, v = colorsys.rgb_to_hsv(r, g, b)
+    def set_rgb(self, r, g, b, update_rgb_edits=True):
+        # Need to clamp the value because unfortunately QDoubleValidator.setTop
+        # is not working properly.
+        h, s, v = colorsys.rgb_to_hsv(min(r, 1.0), min(g, 1.0), min(b, 1.0))
         self.hue = h
         self.saturation = s
         self.value = v
@@ -69,14 +67,17 @@ class ColorBalance(QtWidgets.QWidget):
         self.huesat_wheel.saturation = s
         self.huesat_wheel.update_color_point()
         self.value_slider.value = v
-        self.update_rgb()
+        if update_rgb_edits:
+            self.update_rgb()
 
     def update_rgb(self):
         self.currentColorChanged.emit(self.rgb())
-        r, g, b = self.rgb()
-        self.rgb_label['r'].setText(f'{r:.2f}')
-        self.rgb_label['g'].setText(f'{g:.2f}')
-        self.rgb_label['b'].setText(f'{b:.2f}')
+        for widget, color in zip(self.rgb_edits, self.rgb()):
+            widget.setText(f'{color:.2f}')
+
+    def set_rgb_from_edit(self):
+        r, g, b = [float(edit.text() or "0.0") for edit in self.rgb_edits]
+        self.set_rgb(r, g ,b, update_rgb_edits=False)
 
 
 class ValueSlider(QtWidgets.QWidget):
