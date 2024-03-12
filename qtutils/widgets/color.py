@@ -5,19 +5,19 @@ import sys
 
 
 class ColorBalance(QtWidgets.QWidget):
-    currentColorChanged = QtCore.Signal(tuple)
+    color_changed = QtCore.Signal(tuple)
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle('ColorBalance')
+        self.setWindowTitle('Color Balance')
         self.resize(150, 150)
         self.hue = 1.0
         self.saturation = 0.0
         self.value = 1.0
         self.huesat_wheel = HueSatWheel()
-        self.huesat_wheel.currentColorChanged.connect(self.on_hue_sat_changed)
+        self.huesat_wheel.color_changed.connect(self.on_hue_sat_changed)
         self.value_slider = ValueSlider()
-        self.value_slider.sliderMoved.connect(self.on_value_changed)
+        self.value_slider.slider_moved.connect(self.on_value_changed)
         self.rgb_label = {}
         self.rgb_label = {
             'r': QtWidgets.QLabel(),
@@ -72,7 +72,7 @@ class ColorBalance(QtWidgets.QWidget):
         self.update_rgb()
 
     def update_rgb(self):
-        self.currentColorChanged.emit(self.rgb())
+        self.color_changed.emit(self.rgb())
         r, g, b = self.rgb()
         self.rgb_label['r'].setText(f'{r:.2f}')
         self.rgb_label['g'].setText(f'{g:.2f}')
@@ -80,18 +80,18 @@ class ColorBalance(QtWidgets.QWidget):
 
 
 class ValueSlider(QtWidgets.QWidget):
-    FIXED_WIDTH = 10
-    DIVIDED_INCREMENT = 100
-    SELECT_SIZE = 4
-    GRID_NUMBER = 15
-    sliderMoved = QtCore.Signal(float)
+    slider_moved = QtCore.Signal(float)
 
     def __init__(self, value=1.0, parent=None):
         super().__init__(parent)
         self.value = value
         self._drag_origin = None
         self._start_origin = None
-        self.setFixedWidth(self.FIXED_WIDTH)
+        self.divided_increment = 100
+        self.select_size = 4
+        self.grid_number = 15
+        fixed_width = 10
+        self.setFixedWidth(fixed_width)
         self.setSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
 
@@ -116,10 +116,10 @@ class ValueSlider(QtWidgets.QWidget):
 
         # Selected color point
         painter.setPen(QtCore.Qt.darkGray)
-        for i in range(self.GRID_NUMBER):
-            d = (self.height() / self.GRID_NUMBER)
+        for i in range(self.grid_number):
+            d = (self.height() / self.grid_number)
             step_y = (i * d) + (d / 2)
-            size = self.SELECT_SIZE / 2
+            size = self.select_size / 2
             pos_x = QtCore.QPoint((self.width() / 2) - size - 1, step_y)
             pos_y = QtCore.QPoint((self.width() / 2) + size, step_y)
             line = QtCore.QLine(pos_x, pos_y)
@@ -135,9 +135,9 @@ class ValueSlider(QtWidgets.QWidget):
     def mouseMoveEvent(self, event):
         current_position = QtGui.QCursor().pos()
         offset_pixel = self._drag_origin.y() - current_position.y()
-        offset = offset_pixel / self.DIVIDED_INCREMENT
+        offset = offset_pixel / self.divided_increment
         self.value = self._start_origin + offset
-        self.sliderMoved.emit(self.value)
+        self.slider_moved.emit(self.value)
         self.repaint()
 
     def mouseReleaseEvent(self, event):
@@ -153,19 +153,19 @@ class ValueSlider(QtWidgets.QWidget):
 
 
 class HueSatWheel(QtWidgets.QWidget):
-    SELECT_RADIUS = 3
-    MININUM_SIZE = 100
-    currentColorChanged = QtCore.Signal(tuple)
+    color_changed = QtCore.Signal(tuple)
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.resize(100, 100)
-        self.setMinimumSize(self.MININUM_SIZE, self.MININUM_SIZE)
+        minimun_size = 100
+        self.setMinimumSize(minimun_size, minimun_size)
         self.setSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         self.hue = 1.0
         self.saturation = 0.0
         self.value = 1.0
+        self.select_radius = 3
         self._color_point = QtCore.QPoint()
         self._colorwheel_image = None
 
@@ -188,7 +188,7 @@ class HueSatWheel(QtWidgets.QWidget):
         painter.setPen(QtCore.Qt.darkGray)
         painter.setBrush(QtCore.Qt.white)
         painter.drawEllipse(
-            self._color_point, self.SELECT_RADIUS, self.SELECT_RADIUS)
+            self._color_point, self.select_radius, self.select_radius)
         painter.end()
 
     def resizeEvent(self, event):
@@ -207,7 +207,7 @@ class HueSatWheel(QtWidgets.QWidget):
         self._color_point.setX(event.pos().x())
         self._color_point.setY(event.pos().y())
         self.set_hue_sat_from_pos()
-        self.currentColorChanged.emit(self.hsv())
+        self.color_changed.emit(self.hsv())
         self.repaint()
 
     def _get_hue_sat_from_coords(self, x, y):
