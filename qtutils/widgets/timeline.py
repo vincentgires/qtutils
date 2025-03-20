@@ -13,7 +13,7 @@ tick_line_color = (0.5, 0.5, 0.5)
 tick_line_with = 1
 range_intervals_default_color = (0.7, 0.2, 1, 0.35)
 range_intervals_font_scale = 0.75
-range_intervals_font_darken_factor = 0.7
+range_intervals_font_gain_factor = 2
 
 
 class StripItem(QtWidgets.QGraphicsRectItem):
@@ -125,7 +125,7 @@ class TimelineView(QtWidgets.QGraphicsView):
             font = QtWidgets.QApplication.font()
             font.setPointSizeF(font.pointSize() * range_intervals_font_scale)
             darkened_color = tuple(
-                c * range_intervals_font_darken_factor
+                c * range_intervals_font_gain_factor
                 for i, c in enumerate(color) if i < 3)  # Only take rgb
             text = self.scene.addText(name, font)
             text.setDefaultTextColor(QtGui.QColor.fromRgbF(*darkened_color))
@@ -286,10 +286,12 @@ class TimelineWidget(QtWidgets.QWidget):
         self.timeline.set_values(
             self.timeline.start, self.timeline.end, current)
 
-    def set_frame_range(self, start, end, current):
+    def set_frame_range(
+            self, start: int, end: int, current: int | None = None):
         self.start_spin.setValue(start)
         self.end_spin.setValue(end)
-        self.current_spin.setValue(current)
+        if current is not None:
+            self.current_spin.setValue(current)
 
 
 if __name__ == '__main__':
