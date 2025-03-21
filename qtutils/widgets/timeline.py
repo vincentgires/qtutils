@@ -231,20 +231,20 @@ class TimelineWidget(QtWidgets.QWidget):
         self.timeline.set_current_spin(self.current_spin)
 
         # Layout
-        layout = QtWidgets.QVBoxLayout()
+        self.main_layout = QtWidgets.QVBoxLayout()
 
         # Base controls
-        controls = QtWidgets.QHBoxLayout()
-        controls.addWidget(self.start_spin)
-        controls.addWidget(self.current_spin)
-        controls.addWidget(self.end_spin)
-        layout.addLayout(controls)
+        self.controls_layout = QtWidgets.QHBoxLayout()
+        self.controls_layout.addWidget(self.start_spin)
+        self.controls_layout.addWidget(self.current_spin)
+        self.controls_layout.addWidget(self.end_spin)
+        self.main_layout.addLayout(self.controls_layout)
 
         # Timeline
-        layout.addWidget(self.timeline)
+        self.main_layout.addWidget(self.timeline)
 
         # Main layout
-        self.setLayout(layout)
+        self.setLayout(self.main_layout)
 
         # Initialize the timeline
         self.update_timeline()
