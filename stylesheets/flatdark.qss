@@ -156,17 +156,20 @@ QTabBar
 }
 
 QTabBar::tab {
-    border: 1px solid #5D5D5D;
-    /*border-bottom: 0;*/
-    /*border-left: 0;*/
-    border: 0;
-    background-color: #302F2F;
-    padding: 3px;
+    background-color: #3D3D3D;
+    padding: 5px 10px;
+    border: 1px solid #444;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 
 QTabBar::tab:!selected
 {
-    background-color: #3D3D3D;
+    background-color: #302F2F;
+}
+
+QTabWidget::pane {
+    border: 1px solid #222;
 }
 
 QTreeView, QListView
