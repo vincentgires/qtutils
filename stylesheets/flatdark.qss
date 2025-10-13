@@ -66,20 +66,23 @@ QLabel
     border: 0px solid black;
 }
 
-QPushButton
+QPushButton,QToolButton
 {
     margin: 1px;
     padding: 5px;
     border-color: #3A3939;
     background-color: #272525;
+    border-radius: 2px;
+}
+
+QPushButton
+{
+    padding: 5px;
 }
 
 QToolButton
 {
-    margin: 1px;
     padding: 2px;
-    border-color: #343434;
-    background-color: None;
 }
 
 QToolButton:checked, QToolButton:pressed
