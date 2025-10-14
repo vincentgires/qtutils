@@ -5,7 +5,7 @@ from PySide2 import QtCore, QtWidgets
 class PresetSelect(QtWidgets.QToolButton):
     selected = QtCore.Signal(str)
 
-    def __init__(self, parent, items, icons=None):
+    def __init__(self, parent, items, icons=None, text=None):
         super().__init__(parent=parent)
         self.setPopupMode(QtWidgets.QToolButton.InstantPopup)
         actions = [QtWidgets.QAction(p, parent) for p in items]
@@ -17,3 +17,8 @@ class PresetSelect(QtWidgets.QToolButton):
         if icons is not None:
             for action, icon in zip(actions, icons):
                 action.setIcon(icon)
+        if text is not None:
+            self.setText(text)
+            self.setSizePolicy(
+                QtWidgets.QSizePolicy.Policy.Expanding,
+                QtWidgets.QSizePolicy.Policy.Fixed)
