@@ -1,4 +1,4 @@
-from PySide2 import QtGui, QtWidgets, QtCore
+from qtbinding import QtGui, QtWidgets, QtCore
 
 max_range = 999999
 current_frame_size_scale = 0.75

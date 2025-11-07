@@ -1,5 +1,5 @@
 from functools import partial
-from PySide2 import QtCore, QtWidgets
+from qtbinding import QtCore, QtWidgets
 
 
 class PresetSelect(QtWidgets.QToolButton):

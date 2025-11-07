@@ -1,4 +1,4 @@
-from PySide2 import QtWidgets
+from qtbinding import QtWidgets
 
 
 class CollapsibleBox(QtWidgets.QGroupBox):

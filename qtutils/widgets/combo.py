@@ -1,4 +1,4 @@
-from PySide2 import QtWidgets, QtCore, QtGui
+from qtbinding import QtWidgets, QtCore, QtGui
 
 
 class CheckComboBox(QtWidgets.QComboBox):
