@@ -20,6 +20,7 @@ if qt_binding.startswith('PySide'):
 # Compatibility with older version
 if qt_binding == 'PySide2':
     QtGui.QAction = QtWidgets.QAction
+    QtWidgets.QApplication.exec = QtWidgets.QApplication.exec_
 
     class QRegularExpression:
         def __init__(self, pattern=''):
