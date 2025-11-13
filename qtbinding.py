@@ -20,3 +20,52 @@ if qt_binding.startswith('PySide'):
 # Compatibility with older version
 if qt_binding == 'PySide2':
     QtGui.QAction = QtWidgets.QAction
+
+    class QRegularExpression:
+        def __init__(self, pattern=''):
+            self._regexp = QtCore.QRegExp(pattern)
+
+        def match(self, text):
+            index = self._regexp.indexIn(text)
+            return QRegularExpressionMatch(self._regexp, index)
+
+        def __getattr__(self, name):
+            return getattr(self._regexp, name)
+
+    class QRegularExpressionMatch:
+        def __init__(self, regexp, index):
+            self._regexp = regexp
+            self._index = index
+
+        def hasMatch(self):
+            return self._index != -1
+
+        def captured(self, group=0):
+            return self._regexp.cap(group)
+
+        def capturedStart(self, group=0):
+            return self._regexp.pos(group)
+
+        def capturedLength(self, group=0):
+            text = self._regexp.cap(group)
+            return len(text) if text else 0
+
+        def __getattr__(self, name):
+            return getattr(self._regexp, name)
+
+    def setFilterRegularExpression(self, regex):
+        if isinstance(regex, QtCore.QRegularExpression):
+            self.setFilterRegExp(regex.pattern())
+        else:
+            self.setFilterRegExp(regex)
+
+    QtCore.QRegularExpression = QRegularExpression
+    QtCore.QRegularExpressionMatch = QRegularExpressionMatch
+    QtCore.QSortFilterProxyModel.setFilterRegularExpression = setFilterRegularExpression
+
+    for cls in [
+            # QtWidgets.QMenu: don't override it because it crashes
+            QtWidgets.QDialog,
+            QtWidgets.QMessageBox,
+            QtWidgets.QFileDialog]:
+        cls.exec = cls.exec_
