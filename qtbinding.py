@@ -68,5 +68,6 @@ if qt_binding == 'PySide2':
             # QtWidgets.QMenu: don't override it because it crashes
             QtWidgets.QDialog,
             QtWidgets.QMessageBox,
-            QtWidgets.QFileDialog]:
+            QtWidgets.QFileDialog,
+            QtGui.QDrag]:
         cls.exec = cls.exec_
